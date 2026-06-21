@@ -117,7 +117,7 @@ onMounted(cargar)
                   {{ getCategoriaNombre(item.categoriaId) }}
                 </span>
               </td>
-              <td class="p-5 font-outfit font-bold text-[#ff7a45] text-right">${{ item.precio.toFixed(2) }}</td>
+              <td class="p-5 font-outfit font-bold text-[#ff7a45] text-right">S/. {{ item.precio.toFixed(2) }}</td>
               <td class="p-5 text-center">
                 <div :class="['inline-flex items-center justify-center w-8 h-8 rounded-full font-medium text-sm border', item.stock > 10 ? 'bg-[#154b2d]/30 text-[#82e8a6] border-[#154b2d]' : item.stock > 0 ? 'bg-[#6b46c1]/30 text-[#e9ddff] border-[#6b46c1]/50' : 'bg-[#93000a]/30 text-[#ffb4ab] border-[#93000a]/50']">
                   {{ item.stock }}
@@ -159,7 +159,7 @@ onMounted(cargar)
           
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-medium text-[#c6c4df] mb-2">Precio ($)</label>
+              <label class="block text-sm font-medium text-[#c6c4df] mb-2">Precio (S/.)</label>
               <input v-model.number="form.precio" required type="number" step="0.01" min="0" class="w-full bg-[#131316] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#ff7a45] transition-colors">
             </div>
             <div>

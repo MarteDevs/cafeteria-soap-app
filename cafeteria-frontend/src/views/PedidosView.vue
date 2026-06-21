@@ -96,7 +96,7 @@ onMounted(cargar)
               <td class="p-5">
                 <BadgeEstado :estado="item.estado" />
               </td>
-              <td class="p-5 font-outfit font-bold text-[#ff7a45] text-right">${{ item.total.toFixed(2) }}</td>
+              <td class="p-5 font-outfit font-bold text-[#ff7a45] text-right">S/. {{ item.total.toFixed(2) }}</td>
               <td class="p-5 text-right space-x-3">
                 <button 
                   v-if="item.estado === 'EN_PREPARACION'" 

@@ -128,7 +128,7 @@ function finalizarPedido() {
       <div class="flex gap-4 items-center" v-if="paso === 2">
         <div class="glass-panel px-6 py-2 flex items-center gap-3">
           <span class="text-[#a09fb9] text-sm uppercase tracking-wider">Total</span>
-          <span class="text-2xl font-outfit font-bold text-[#ff7a45]">${{ totalPedido.toFixed(2) }}</span>
+          <span class="text-2xl font-outfit font-bold text-[#ff7a45]">S/. {{ totalPedido.toFixed(2) }}</span>
         </div>
         <button @click="finalizarPedido" class="btn-primary">
           Confirmar Orden
@@ -189,7 +189,7 @@ function finalizarPedido() {
                <div class="absolute inset-0 bg-gradient-to-t from-[#131316] to-transparent"></div>
                <div class="absolute bottom-3 left-4 right-4 flex justify-between items-end">
                  <h3 class="font-outfit font-bold text-xl text-white drop-shadow-md">{{ prod.nombre }}</h3>
-                 <span class="text-[#ff7a45] font-outfit font-bold text-xl">${{ prod.precio.toFixed(2) }}</span>
+                 <span class="text-[#ff7a45] font-outfit font-bold text-xl">S/. {{ prod.precio.toFixed(2) }}</span>
                </div>
             </div>
 
@@ -226,10 +226,10 @@ function finalizarPedido() {
                 <div class="absolute inset-y-0 left-0 w-1 bg-[#ff7a45] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div class="flex justify-between mb-1">
                   <span class="font-medium text-[#e4e1e6]">{{ det.productoNombre }}</span>
-                  <span class="font-outfit font-bold text-[#e4e1e6]">${{ det.subtotal.toFixed(2) }}</span>
+                  <span class="font-outfit font-bold text-[#e4e1e6]">S/. {{ det.subtotal.toFixed(2) }}</span>
                 </div>
                 <div class="flex justify-between items-center text-sm text-[#a09fb9]">
-                  <span>{{ det.cantidad }} x ${{ det.precioUnitario.toFixed(2) }}</span>
+                  <span>{{ det.cantidad }} x S/. {{ det.precioUnitario.toFixed(2) }}</span>
                   <button @click="quitarDelCarrito(det)" class="text-[#ffb4ab] hover:text-[#ffdad6] opacity-0 group-hover:opacity-100 transition-opacity bg-[#93000a]/50 p-1 rounded">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                   </button>
