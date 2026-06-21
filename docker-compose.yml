@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: cafeteria-db
+    environment:
+      MYSQL_ROOT_PASSWORD: marte
+      MYSQL_DATABASE: cafeteria_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db-init/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pmarte"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - cafeteria-network
+
+  backend:
+    build:
+      context: ./cafeteria-server
+      dockerfile: Dockerfile
+    container_name: cafeteria-backend
+    ports:
+      - "8080:8080"
+      - "8085:8085"
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=3306
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=marte
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - cafeteria-network
+
+  frontend:
+    build:
+      context: ./cafeteria-frontend
+      dockerfile: Dockerfile
+    container_name: cafeteria-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - cafeteria-network
+
+volumes:
+  db_data:
+
+networks:
+  cafeteria-network:
+    driver: bridge
