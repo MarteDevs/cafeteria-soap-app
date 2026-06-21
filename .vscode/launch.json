@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-CafeteriaServerApplication<cafeteria-server>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "mars.dev.CafeteriaServerApplication",
+            "projectName": "cafeteria-server",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
