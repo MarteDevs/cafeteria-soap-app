@@ -62,71 +62,82 @@ onMounted(cargar)
 </script>
 
 <template>
-  <div class="space-y-6">
-    <div class="flex justify-between items-center">
+  <div class="space-y-6 font-inter">
+    <div class="flex justify-between items-end">
       <div>
-        <h1 class="text-2xl font-bold text-slate-800">Categorías</h1>
-        <p class="text-slate-500 text-sm mt-1">Gestiona las categorías de tus productos</p>
+        <h1 class="text-4xl font-outfit font-bold text-white mb-1">Categorías</h1>
+        <p class="text-[#a09fb9]">Gestiona las categorías de tus productos</p>
       </div>
-      <button @click="abrirCrear" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg shadow transition-colors font-medium flex items-center gap-2">
+      <button @click="abrirCrear" class="btn-primary flex items-center gap-2">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
         Nueva Categoría
       </button>
     </div>
 
-    <div v-if="error" class="bg-red-50 text-red-600 p-4 rounded-lg border border-red-200">
+    <div v-if="error" class="bg-[#93000a]/20 text-[#ffb4ab] border border-[#93000a] p-4 rounded-xl backdrop-blur-md">
       {{ error }}
     </div>
 
-    <div v-if="loading && items.length === 0" class="flex justify-center py-12">
-      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-amber-600"></div>
+    <div v-if="loading && items.length === 0" class="flex justify-center py-20">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff7a45]"></div>
     </div>
 
-    <div v-else class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-      <table class="w-full text-left border-collapse">
-        <thead>
-          <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 text-sm uppercase tracking-wider">
-            <th class="p-4 font-semibold">ID</th>
-            <th class="p-4 font-semibold">Nombre</th>
-            <th class="p-4 font-semibold">Descripción</th>
-            <th class="p-4 font-semibold text-right">Acciones</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100">
-          <tr v-for="item in items" :key="item.id" class="hover:bg-slate-50 transition-colors">
-            <td class="p-4 text-slate-500">#{{ item.id }}</td>
-            <td class="p-4 font-medium text-slate-800">{{ item.nombre }}</td>
-            <td class="p-4 text-slate-600">{{ item.descripcion }}</td>
-            <td class="p-4 text-right space-x-3">
-              <button @click="abrirEditar(item)" class="text-blue-600 hover:text-blue-800 font-medium transition-colors">Editar</button>
-              <button @click="borrar(item.id)" class="text-red-600 hover:text-red-800 font-medium transition-colors">Eliminar</button>
-            </td>
-          </tr>
-          <tr v-if="items.length === 0">
-            <td colspan="4" class="p-8 text-center text-slate-500">No hay categorías registradas</td>
-          </tr>
-        </tbody>
-      </table>
+    <div v-else class="glass-panel overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-[#1a1a2e]/80 border-b border-white/10 text-[#a09fb9] text-sm uppercase tracking-wider font-outfit">
+              <th class="p-5 font-semibold w-24">ID</th>
+              <th class="p-5 font-semibold w-1/3">Nombre</th>
+              <th class="p-5 font-semibold">Descripción</th>
+              <th class="p-5 font-semibold text-right">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5">
+            <tr v-for="item in items" :key="item.id" class="hover:bg-white/5 transition-colors group relative">
+              <td class="p-5 text-[#c6c4df]">#{{ item.id }}</td>
+              <td class="p-5 font-outfit font-bold text-[#e4e1e6] text-lg">{{ item.nombre }}</td>
+              <td class="p-5 text-[#a09fb9]">{{ item.descripcion }}</td>
+              <td class="p-5 text-right space-x-2">
+                <button @click="abrirEditar(item)" class="p-2 rounded-lg bg-white/5 text-[#a09fb9] hover:text-white hover:bg-white/10 border border-white/5 transition-all">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                </button>
+                <button @click="borrar(item.id)" class="p-2 rounded-lg bg-white/5 text-[#ffb4ab] hover:text-white hover:bg-[#93000a]/80 border border-white/5 transition-all">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                </button>
+              </td>
+            </tr>
+            <tr v-if="items.length === 0">
+              <td colspan="4" class="p-12 text-center text-[#a09fb9]">
+                <div class="flex flex-col items-center gap-3">
+                  <svg class="w-12 h-12 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                  <p>No hay categorías registradas</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Modal -->
-    <div v-if="showModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
-      <div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden transform transition-all">
-        <div class="p-6 border-b border-slate-100">
-          <h3 class="text-xl font-bold text-slate-800">{{ editando ? 'Editar Categoría' : 'Nueva Categoría' }}</h3>
+    <div v-if="showModal" class="fixed inset-0 bg-[#0f0f12]/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
+      <div class="glass-panel w-full max-w-md overflow-hidden transform transition-all border border-white/20 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+        <div class="p-6 border-b border-white/10 bg-[#1a1a2e]/50">
+          <h3 class="text-2xl font-outfit font-bold text-white">{{ editando ? 'Editar Categoría' : 'Nueva Categoría' }}</h3>
         </div>
-        <form @submit.prevent="guardar" class="p-6 space-y-4">
+        <form @submit.prevent="guardar" class="p-6 space-y-5">
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Nombre</label>
-            <input v-model="form.nombre" required type="text" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-shadow" placeholder="Ej. Bebidas Calientes">
+            <label class="block text-sm font-medium text-[#c6c4df] mb-2">Nombre</label>
+            <input v-model="form.nombre" required type="text" class="w-full bg-[#131316] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#ff7a45] transition-colors" placeholder="Ej. Bebidas Calientes">
           </div>
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Descripción</label>
-            <textarea v-model="form.descripcion" required rows="3" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-shadow" placeholder="Descripción de la categoría..."></textarea>
+            <label class="block text-sm font-medium text-[#c6c4df] mb-2">Descripción</label>
+            <textarea v-model="form.descripcion" required rows="3" class="w-full bg-[#131316] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#ff7a45] transition-colors" placeholder="Descripción de la categoría..."></textarea>
           </div>
-          <div class="pt-4 flex gap-3 justify-end">
-            <button type="button" @click="showModal = false" class="px-5 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition-colors">Cancelar</button>
-            <button type="submit" class="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-medium shadow transition-colors">Guardar</button>
+          <div class="pt-6 flex gap-3 justify-end border-t border-white/5">
+            <button type="button" @click="showModal = false" class="btn-secondary">Cancelar</button>
+            <button type="submit" class="btn-primary py-2 text-sm shadow-[0_0_10px_rgba(255,122,69,0.3)] hover:shadow-[0_0_20px_rgba(255,122,69,0.6)]">Guardar</button>
           </div>
         </form>
       </div>

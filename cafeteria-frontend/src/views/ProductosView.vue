@@ -74,100 +74,111 @@ onMounted(cargar)
 </script>
 
 <template>
-  <div class="space-y-6">
-    <div class="flex justify-between items-center">
+  <div class="space-y-6 font-inter">
+    <div class="flex justify-between items-end">
       <div>
-        <h1 class="text-2xl font-bold text-slate-800">Productos</h1>
-        <p class="text-slate-500 text-sm mt-1">Catálogo de productos disponibles</p>
+        <h1 class="text-4xl font-outfit font-bold text-white mb-1">Productos</h1>
+        <p class="text-[#a09fb9]">Catálogo de productos disponibles</p>
       </div>
-      <button @click="abrirCrear" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg shadow transition-colors font-medium flex items-center gap-2">
+      <button @click="abrirCrear" class="btn-primary flex items-center gap-2">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
         Nuevo Producto
       </button>
     </div>
 
-    <div v-if="error" class="bg-red-50 text-red-600 p-4 rounded-lg border border-red-200">
+    <div v-if="error" class="bg-[#93000a]/20 text-[#ffb4ab] border border-[#93000a] p-4 rounded-xl backdrop-blur-md">
       {{ error }}
     </div>
 
-    <div v-if="loading && items.length === 0" class="flex justify-center py-12">
-      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-amber-600"></div>
+    <div v-if="loading && items.length === 0" class="flex justify-center py-20">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff7a45]"></div>
     </div>
 
-    <div v-else class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-      <table class="w-full text-left border-collapse">
-        <thead>
-          <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 text-sm uppercase tracking-wider">
-            <th class="p-4 font-semibold">Producto</th>
-            <th class="p-4 font-semibold">Categoría</th>
-            <th class="p-4 font-semibold text-right">Precio</th>
-            <th class="p-4 font-semibold text-right">Stock</th>
-            <th class="p-4 font-semibold text-right">Acciones</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100">
-          <tr v-for="item in items" :key="item.id" class="hover:bg-slate-50 transition-colors">
-            <td class="p-4">
-              <div class="font-medium text-slate-800">{{ item.nombre }}</div>
-              <div class="text-xs text-slate-400">ID: {{ item.id }}</div>
-            </td>
-            <td class="p-4 text-slate-600">
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800">
-                {{ getCategoriaNombre(item.categoriaId) }}
-              </span>
-            </td>
-            <td class="p-4 font-medium text-slate-800 text-right">${{ item.precio.toFixed(2) }}</td>
-            <td class="p-4 text-right">
-              <span :class="['font-medium', item.stock > 10 ? 'text-green-600' : item.stock > 0 ? 'text-yellow-600' : 'text-red-600']">
-                {{ item.stock }}
-              </span>
-            </td>
-            <td class="p-4 text-right space-x-3">
-              <button @click="abrirEditar(item)" class="text-blue-600 hover:text-blue-800 font-medium transition-colors">Editar</button>
-              <button @click="borrar(item.id)" class="text-red-600 hover:text-red-800 font-medium transition-colors">Eliminar</button>
-            </td>
-          </tr>
-          <tr v-if="items.length === 0">
-            <td colspan="5" class="p-8 text-center text-slate-500">No hay productos registrados</td>
-          </tr>
-        </tbody>
-      </table>
+    <div v-else class="glass-panel overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-[#1a1a2e]/80 border-b border-white/10 text-[#a09fb9] text-sm uppercase tracking-wider font-outfit">
+              <th class="p-5 font-semibold">Producto</th>
+              <th class="p-5 font-semibold">Categoría</th>
+              <th class="p-5 font-semibold text-right">Precio</th>
+              <th class="p-5 font-semibold text-center">Stock</th>
+              <th class="p-5 font-semibold text-right">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5">
+            <tr v-for="item in items" :key="item.id" class="hover:bg-white/5 transition-colors group relative">
+              <td class="p-5">
+                <div class="font-medium text-[#e4e1e6]">{{ item.nombre }}</div>
+                <div class="text-xs text-[#a09fb9]">ID: {{ item.id }}</div>
+              </td>
+              <td class="p-5">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/5 text-[#c6c4df] border border-white/10">
+                  {{ getCategoriaNombre(item.categoriaId) }}
+                </span>
+              </td>
+              <td class="p-5 font-outfit font-bold text-[#ff7a45] text-right">${{ item.precio.toFixed(2) }}</td>
+              <td class="p-5 text-center">
+                <div :class="['inline-flex items-center justify-center w-8 h-8 rounded-full font-medium text-sm border', item.stock > 10 ? 'bg-[#154b2d]/30 text-[#82e8a6] border-[#154b2d]' : item.stock > 0 ? 'bg-[#6b46c1]/30 text-[#e9ddff] border-[#6b46c1]/50' : 'bg-[#93000a]/30 text-[#ffb4ab] border-[#93000a]/50']">
+                  {{ item.stock }}
+                </div>
+              </td>
+              <td class="p-5 text-right space-x-2">
+                <button @click="abrirEditar(item)" class="p-2 rounded-lg bg-white/5 text-[#a09fb9] hover:text-white hover:bg-white/10 border border-white/5 transition-all">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                </button>
+                <button @click="borrar(item.id)" class="p-2 rounded-lg bg-white/5 text-[#ffb4ab] hover:text-white hover:bg-[#93000a]/80 border border-white/5 transition-all">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                </button>
+              </td>
+            </tr>
+            <tr v-if="items.length === 0">
+              <td colspan="5" class="p-12 text-center text-[#a09fb9]">
+                <div class="flex flex-col items-center gap-3">
+                  <svg class="w-12 h-12 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+                  <p>No hay productos registrados</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Modal -->
-    <div v-if="showModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
-      <div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden transform transition-all">
-        <div class="p-6 border-b border-slate-100">
-          <h3 class="text-xl font-bold text-slate-800">{{ editando ? 'Editar Producto' : 'Nuevo Producto' }}</h3>
+    <div v-if="showModal" class="fixed inset-0 bg-[#0f0f12]/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
+      <div class="glass-panel w-full max-w-md overflow-hidden transform transition-all border border-white/20 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+        <div class="p-6 border-b border-white/10 bg-[#1a1a2e]/50">
+          <h3 class="text-2xl font-outfit font-bold text-white">{{ editando ? 'Editar Producto' : 'Nuevo Producto' }}</h3>
         </div>
-        <form @submit.prevent="guardar" class="p-6 space-y-4">
+        <form @submit.prevent="guardar" class="p-6 space-y-5">
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Nombre</label>
-            <input v-model="form.nombre" required type="text" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-shadow" placeholder="Ej. Café Moka">
+            <label class="block text-sm font-medium text-[#c6c4df] mb-2">Nombre</label>
+            <input v-model="form.nombre" required type="text" class="w-full bg-[#131316] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#ff7a45] transition-colors" placeholder="Ej. Café Moka">
           </div>
           
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-medium text-slate-700 mb-1">Precio ($)</label>
-              <input v-model.number="form.precio" required type="number" step="0.01" min="0" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-shadow">
+              <label class="block text-sm font-medium text-[#c6c4df] mb-2">Precio ($)</label>
+              <input v-model.number="form.precio" required type="number" step="0.01" min="0" class="w-full bg-[#131316] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#ff7a45] transition-colors">
             </div>
             <div>
-              <label class="block text-sm font-medium text-slate-700 mb-1">Stock Inicial</label>
-              <input v-model.number="form.stock" required type="number" min="0" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-shadow">
+              <label class="block text-sm font-medium text-[#c6c4df] mb-2">Stock Inicial</label>
+              <input v-model.number="form.stock" required type="number" min="0" class="w-full bg-[#131316] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#ff7a45] transition-colors">
             </div>
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Categoría</label>
-            <select v-model="form.categoriaId" required class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-shadow bg-white">
+            <label class="block text-sm font-medium text-[#c6c4df] mb-2">Categoría</label>
+            <select v-model="form.categoriaId" required class="w-full bg-[#131316] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#ff7a45] transition-colors appearance-none">
               <option value="" disabled>Seleccione una categoría</option>
               <option v-for="cat in categorias" :key="cat.id" :value="cat.id">{{ cat.nombre }}</option>
             </select>
           </div>
 
-          <div class="pt-4 flex gap-3 justify-end">
-            <button type="button" @click="showModal = false" class="px-5 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition-colors">Cancelar</button>
-            <button type="submit" class="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-medium shadow transition-colors">Guardar</button>
+          <div class="pt-6 flex gap-3 justify-end border-t border-white/5">
+            <button type="button" @click="showModal = false" class="btn-secondary">Cancelar</button>
+            <button type="submit" class="btn-primary py-2 text-sm shadow-[0_0_10px_rgba(255,122,69,0.3)] hover:shadow-[0_0_20px_rgba(255,122,69,0.6)]">Guardar</button>
           </div>
         </form>
       </div>
