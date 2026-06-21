@@ -81,6 +81,7 @@ onMounted(cargar)
             <tr class="bg-[#1a1a2e]/80 border-b border-white/10 text-[#a09fb9] text-sm uppercase tracking-wider font-outfit">
               <th class="p-5 font-semibold">ID / Fecha</th>
               <th class="p-5 font-semibold">Mesa</th>
+              <th class="p-5 font-semibold">Mesero</th>
               <th class="p-5 font-semibold">Estado</th>
               <th class="p-5 font-semibold text-right">Total</th>
               <th class="p-5 font-semibold text-right">Acciones</th>
@@ -93,6 +94,7 @@ onMounted(cargar)
                 <div class="text-xs text-[#a09fb9]">{{ formatFecha(item.fecha) }}</div>
               </td>
               <td class="p-5 font-medium text-[#c6c4df]">Mesa {{ item.mesa }}</td>
+              <td class="p-5 text-[#a09fb9] font-medium">{{ item.mesero || 'Anónimo' }}</td>
               <td class="p-5">
                 <BadgeEstado :estado="item.estado" />
               </td>
@@ -118,7 +120,7 @@ onMounted(cargar)
               </td>
             </tr>
             <tr v-if="items.length === 0">
-              <td colspan="5" class="p-12 text-center text-[#a09fb9]">
+              <td colspan="6" class="p-12 text-center text-[#a09fb9]">
                 <div class="flex flex-col items-center gap-3">
                   <svg class="w-12 h-12 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                   <p>No hay pedidos registrados</p>

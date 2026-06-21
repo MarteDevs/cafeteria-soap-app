@@ -25,12 +25,13 @@ public class PedidoImpl implements IPedidoService {
     }
 
     @Override
-    public Pedido crearPedido(String mesa) {
+    public Pedido crearPedido(String mesa, String mesero) {
         Pedido p = new Pedido();
         p.setMesa(mesa);
         p.setEstado("PENDIENTE");
         p.setTotal(0.0);
         p.setFecha(LocalDateTime.now());
+        p.setMesero(mesero);
         return pedidoRepo.save(p);
     }
 

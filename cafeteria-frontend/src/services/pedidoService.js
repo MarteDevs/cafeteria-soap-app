@@ -7,6 +7,7 @@ function parsePedido(node) {
     estado: getText(node, 'estado'),
     total:  parseFloat(getText(node, 'total')),
     fecha:  getText(node, 'fecha'),
+    mesero: getText(node, 'mesero'),
   }
 }
 
@@ -15,8 +16,8 @@ export async function listarPedidos() {
   return getNodes(xml, 'return').map(parsePedido)
 }
 
-export async function crearPedido(mesa) {
-  const xml = await callSoap('pedido', 'crearPedido', `<arg0>${mesa}</arg0>`)
+export async function crearPedido(mesa, mesero) {
+  const xml = await callSoap('pedido', 'crearPedido', `<arg0>${mesa}</arg0><arg1>${mesero}</arg1>`)
   return parsePedido(getNodes(xml, 'return')[0])
 }
 

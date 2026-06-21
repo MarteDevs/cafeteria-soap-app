@@ -8,7 +8,7 @@ import java.util.List;
 @WebService
 public interface IPedidoService {
     List<Pedido> listarPedidos();
-    Pedido crearPedido(String mesa);
+    Pedido crearPedido(String mesa, String mesero);
     Pedido buscarPedido(int id);
     String cambiarEstado(int id, String nuevoEstado);
     String cancelarPedido(int id);

@@ -16,6 +16,7 @@ public class Pedido {
     private String estado; // PENDIENTE | EN_PREPARACION | ENTREGADO | CANCELADO
     private double total;
     private LocalDateTime fecha;
+    private String mesero;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<DetallePedido> detalles;
@@ -70,5 +71,13 @@ public class Pedido {
 
     public void setDetalles(List<DetallePedido> detalles) {
         this.detalles = detalles;
+    }
+
+    public String getMesero() {
+        return mesero;
+    }
+
+    public void setMesero(String mesero) {
+        this.mesero = mesero;
     }
 }

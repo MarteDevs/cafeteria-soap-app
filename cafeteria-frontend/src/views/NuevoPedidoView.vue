@@ -57,7 +57,9 @@ async function iniciarPedido() {
   if (!mesa.value) return
   try {
     loading.value = true
-    pedidoActual.value = await crearPedido(mesa.value)
+    const session = localStorage.getItem('usuario')
+    const meseroNombre = session ? JSON.parse(session).nombre : 'Mesero Anónimo'
+    pedidoActual.value = await crearPedido(mesa.value, meseroNombre)
     paso.value = 2
     await cargarDatos()
   } catch (err) {
