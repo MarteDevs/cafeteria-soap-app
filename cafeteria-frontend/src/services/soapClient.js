@@ -32,3 +32,14 @@ export function getText(node, tag) {
   const el = node.getElementsByTagNameNS('*', tag)[0]
   return el ? el.textContent.trim() : ''
 }
+
+export function getChildNode(node, tag) {
+  if (!node) return null
+  const children = [...node.childNodes]
+  return children.find(c => c.localName === tag || c.nodeName.endsWith(':' + tag) || c.nodeName === tag) || null
+}
+
+export function getChildText(node, tag) {
+  const el = getChildNode(node, tag)
+  return el ? el.textContent.trim() : ''
+}

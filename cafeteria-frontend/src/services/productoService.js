@@ -1,12 +1,13 @@
-import { callSoap, getNodes, getText } from './soapClient.js'
+import { callSoap, getNodes, getText, getChildText, getChildNode } from './soapClient.js'
 
 function parseProducto(node) {
+  const catNode = getChildNode(node, 'categoria')
   return {
-    id:          getText(node, 'id'),
-    nombre:      getText(node, 'nombre'),
-    precio:      parseFloat(getText(node, 'precio')),
-    stock:       parseInt(getText(node, 'stock')),
-    categoriaId: getText(node, 'categoriaId') || getText(node, 'id', node.querySelector?.('[localName="categoria"]')),
+    id:          getChildText(node, 'id'),
+    nombre:      getChildText(node, 'nombre'),
+    precio:      parseFloat(getChildText(node, 'precio')),
+    stock:       parseInt(getChildText(node, 'stock')),
+    categoriaId: catNode ? getChildText(catNode, 'id') : '',
   }
 }
 

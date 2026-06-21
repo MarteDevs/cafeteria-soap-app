@@ -1,13 +1,14 @@
-import { callSoap, getNodes, getText } from './soapClient.js'
+import { callSoap, getNodes, getText, getChildText, getChildNode } from './soapClient.js'
 
 function parseDetalle(node) {
+  const prodNode = getChildNode(node, 'producto')
   return {
-    id:            getText(node, 'id'),
-    cantidad:      parseInt(getText(node, 'cantidad')),
-    precioUnitario:parseFloat(getText(node, 'precioUnitario')),
-    subtotal:      parseFloat(getText(node, 'subtotal')),
-    productoId:    getText(node, 'productoId') || getText(node, 'id', node.querySelector?.('[localName="producto"]')),
-    productoNombre:getText(node, 'nombre', node.querySelector?.('[localName="producto"]')) || getText(node, 'nombre'), // Depende de la estructura exacta devuelta
+    id:            getChildText(node, 'id'),
+    cantidad:      parseInt(getChildText(node, 'cantidad')),
+    precioUnitario:parseFloat(getChildText(node, 'precioUnitario')),
+    subtotal:      parseFloat(getChildText(node, 'subtotal')),
+    productoId:    prodNode ? getChildText(prodNode, 'id') : '',
+    productoNombre:prodNode ? getChildText(prodNode, 'nombre') : 'Desconocido',
   }
 }
 

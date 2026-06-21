@@ -14,11 +14,11 @@ public class CafeteriaServerApplication {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext ctx = SpringApplication.run(CafeteriaServerApplication.class, args);
 
-		Endpoint.publish("http://localhost:8085/ws/categoria", ctx.getBean(CategoriaImpl.class));
-		Endpoint.publish("http://localhost:8085/ws/producto", ctx.getBean(ProductoImpl.class));
-		Endpoint.publish("http://localhost:8085/ws/pedido", ctx.getBean(PedidoImpl.class));
-		Endpoint.publish("http://localhost:8085/ws/detalle", ctx.getBean(DetalleImpl.class));
-		Endpoint.publish("http://localhost:8085/ws/usuario", ctx.getBean(UsuarioImpl.class));
+		Endpoint.publish("http://0.0.0.0:8085/ws/categoria", ctx.getBean(CategoriaImpl.class));
+		Endpoint.publish("http://0.0.0.0:8085/ws/producto", ctx.getBean(ProductoImpl.class));
+		Endpoint.publish("http://0.0.0.0:8085/ws/pedido", ctx.getBean(PedidoImpl.class));
+		Endpoint.publish("http://0.0.0.0:8085/ws/detalle", ctx.getBean(DetalleImpl.class));
+		Endpoint.publish("http://0.0.0.0:8085/ws/usuario", ctx.getBean(UsuarioImpl.class));
 
 		// Semilla de usuarios por defecto
 		IUsuarioRepository userRepo = ctx.getBean(IUsuarioRepository.class);

@@ -44,6 +44,20 @@ async function cargarDatos() {
   }
 }
 
+function getProductImage(nombre) {
+  const lower = nombre.toLowerCase()
+  if (lower.includes('espresso')) return 'https://images.unsplash.com/photo-1510707577719-ee7c1485a086?auto=format&fit=crop&w=400&q=80'
+  if (lower.includes('americano')) return 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80'
+  if (lower.includes('cappuccino') || lower.includes('macchiato')) return 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=400&q=80'
+  if (lower.includes('moka')) return 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=400&q=80'
+  if (lower.includes('iced') || lower.includes('helado')) return 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=400&q=80'
+  if (lower.includes('frape') || lower.includes('frappé')) return 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=400&q=80'
+  if (lower.includes('naranja') || lower.includes('orange')) return 'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=400&q=80'
+  if (lower.includes('fresa') || lower.includes('strawberry') || lower.includes('batido')) return 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=400&q=80'
+  if (lower.includes('papaya') || lower.includes('jugo')) return 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=400&q=80'
+  return 'https://images.unsplash.com/photo-1507133750040-4a8f57021571?auto=format&fit=crop&w=400&q=80'
+}
+
 const productosFiltrados = computed(() => {
   if (!categoriaFiltro.value) return productos.value
   return productos.value.filter(p => String(p.categoriaId) === String(categoriaFiltro.value))
@@ -182,12 +196,9 @@ function finalizarPedido() {
         <!-- Grid de Productos -->
         <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div v-for="prod in productosFiltrados" :key="prod.id" class="glass-card flex flex-col relative group">
-            <!-- Imagen Placeholder con Gradiente -->
-            <div class="h-40 w-full bg-gradient-to-br from-[#1a1a2e] to-[#2a2a2d] border-b border-white/5 relative overflow-hidden">
-               <!-- Simulación de imagen con icono para ambiente espacial -->
-               <div class="absolute inset-0 flex items-center justify-center opacity-20 group-hover:scale-110 transition-transform duration-500">
-                  <svg class="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-               </div>
+            <!-- Imagen Real con Unsplash -->
+            <div class="h-40 w-full relative overflow-hidden">
+               <img :src="getProductImage(prod.nombre)" :alt="prod.nombre" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                <div class="absolute inset-0 bg-gradient-to-t from-[#131316] to-transparent"></div>
                <div class="absolute bottom-3 left-4 right-4 flex justify-between items-end">
                  <h3 class="font-outfit font-bold text-xl text-white drop-shadow-md">{{ prod.nombre }}</h3>
