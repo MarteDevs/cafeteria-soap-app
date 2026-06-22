@@ -156,35 +156,40 @@ function finalizarPedido() {
       {{ error }}
     </div>
 
-    <!-- PASO 1: Ingreso de Mesa -->
-    <div v-if="paso === 1" class="max-w-md mx-auto glass-panel p-10 mt-16 animate-fade-in text-center">
-      <div class="w-20 h-20 bg-gradient-to-br from-[#ff7a45]/20 to-[#6b46c1]/20 border border-[#ff7a45]/30 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-[0_0_20px_rgba(255,122,69,0.15)]">
-        <svg class="w-10 h-10 text-[#ff7a45]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-      </div>
-      <h2 class="text-2xl font-outfit font-bold text-white mb-6">Apertura de Orden</h2>
-      
-      <form @submit.prevent="iniciarPedido" class="space-y-6">
-        <div class="text-left">
-          <label class="block text-sm font-medium text-[#c6c4df] mb-2">Mesa o Referencia</label>
-          <input v-model="mesa" required type="text" class="w-full bg-[#131316] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#ff7a45] focus:shadow-[0_0_10px_rgba(255,122,69,0.3)] transition-all" placeholder="Ej: Mesa 5" :disabled="loading">
+    <Transition 
+      enter-active-class="animate__animated animate__fadeInRight animate__fast"
+      leave-active-class="animate__animated animate__fadeOutLeft animate__fast"
+      mode="out-in"
+    >
+      <!-- PASO 1: Ingreso de Mesa -->
+      <div v-if="paso === 1" key="paso1" class="max-w-md mx-auto glass-panel p-10 mt-16 text-center">
+        <div class="w-20 h-20 bg-gradient-to-br from-[#ff7a45]/20 to-[#6b46c1]/20 border border-[#ff7a45]/30 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-[0_0_20px_rgba(255,122,69,0.15)]">
+          <svg class="w-10 h-10 text-[#ff7a45]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
         </div>
-        <button type="submit" :disabled="loading || !mesa" class="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed">
-          {{ loading ? 'Iniciando...' : 'Comenzar Pedido' }}
-        </button>
-      </form>
-    </div>
+        <h2 class="text-2xl font-outfit font-bold text-white mb-6">Apertura de Orden</h2>
+        
+        <form @submit.prevent="iniciarPedido" class="space-y-6">
+          <div class="text-left">
+            <label class="block text-sm font-medium text-[#c6c4df] mb-2">Mesa o Referencia</label>
+            <input v-model="mesa" required type="text" class="w-full bg-[#131316] border border-mars-primary/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#ff7a45] focus:shadow-[0_0_10px_rgba(255,122,69,0.3)] transition-all" placeholder="Ej: Mesa 5" :disabled="loading">
+          </div>
+          <button type="submit" :disabled="loading || !mesa" class="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed">
+            {{ loading ? 'Iniciando...' : 'Comenzar Pedido' }}
+          </button>
+        </form>
+      </div>
 
-    <!-- PASO 2: Catálogo y Carrito -->
-    <div v-if="paso === 2" class="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-fade-in relative">
+      <!-- PASO 2: Catálogo y Carrito -->
+      <div v-else key="paso2" class="grid grid-cols-1 lg:grid-cols-3 gap-8 relative">
       
       <!-- Catálogo (2/3) -->
       <div class="lg:col-span-2 flex flex-col gap-6">
         <!-- Filtro de categorías -->
         <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-          <button @click="categoriaFiltro = ''" :class="['px-5 py-2 rounded-full font-medium whitespace-nowrap transition-all duration-300 border', categoriaFiltro === '' ? 'bg-[#ff7a45] text-[#131316] border-[#ff7a45] shadow-[0_0_15px_rgba(255,122,69,0.4)]' : 'bg-[#1a1a2e]/50 text-[#c6c4df] border-white/10 hover:border-white/30']">
+          <button @click="categoriaFiltro = ''" :class="['px-5 py-2 rounded-full font-medium whitespace-nowrap transition-all duration-300 border', categoriaFiltro === '' ? 'bg-[#ff7a45] text-[#131316] border-[#ff7a45] shadow-[0_0_15px_rgba(255,122,69,0.4)]' : 'bg-[#1a1a2e]/50 text-[#c6c4df] border-mars-primary/20 hover:border-mars-primary/45']">
             Todos
           </button>
-          <button v-for="cat in categorias" :key="cat.id" @click="categoriaFiltro = cat.id" :class="['px-5 py-2 rounded-full font-medium whitespace-nowrap transition-all duration-300 border', String(categoriaFiltro) === String(cat.id) ? 'bg-[#ff7a45] text-[#131316] border-[#ff7a45] shadow-[0_0_15px_rgba(255,122,69,0.4)]' : 'bg-[#1a1a2e]/50 text-[#c6c4df] border-white/10 hover:border-white/30']">
+          <button v-for="cat in categorias" :key="cat.id" @click="categoriaFiltro = cat.id" :class="['px-5 py-2 rounded-full font-medium whitespace-nowrap transition-all duration-300 border', String(categoriaFiltro) === String(cat.id) ? 'bg-[#ff7a45] text-[#131316] border-[#ff7a45] shadow-[0_0_15px_rgba(255,122,69,0.4)]' : 'bg-[#1a1a2e]/50 text-[#c6c4df] border-mars-primary/20 hover:border-mars-primary/45']">
             {{ cat.nombre }}
           </button>
         </div>
@@ -210,8 +215,8 @@ function finalizarPedido() {
               <p class="text-sm text-[#a09fb9] mb-4">Stock: <span :class="prod.stock > 0 ? 'text-[#e9ddff]' : 'text-[#ffb4ab] font-bold'">{{ prod.stock }}</span></p>
               
               <div class="flex gap-3 items-center mt-auto" v-if="prod.stock > 0">
-                <input type="number" v-model.number="cantidades[prod.id]" min="1" :max="prod.stock" class="w-16 bg-[#0f0f12] border border-white/10 rounded-lg px-2 py-2 text-center text-white focus:outline-none focus:border-[#6b46c1]">
-                <button @click="agregarAlCarrito(prod)" :disabled="loading" class="flex-1 bg-white/5 border border-white/10 hover:border-[#ff7a45]/50 hover:bg-[#ff7a45]/10 text-white py-2 rounded-lg font-medium transition-all duration-300 disabled:opacity-50">
+                <input type="number" v-model.number="cantidades[prod.id]" min="1" :max="prod.stock" class="w-16 bg-[#0f0f12] border border-mars-primary/20 rounded-lg px-2 py-2 text-center text-white focus:outline-none focus:border-[#6b46c1]">
+                <button @click="agregarAlCarrito(prod)" :disabled="loading" class="flex-1 bg-white/5 border border-mars-primary/20 hover:border-[#ff7a45]/50 hover:bg-[#ff7a45]/10 text-white py-2 rounded-lg font-medium transition-all duration-300 disabled:opacity-50">
                   Agregar
                 </button>
               </div>
@@ -226,7 +231,7 @@ function finalizarPedido() {
       <!-- Carrito (1/3) -->
       <div class="lg:col-span-1">
         <div class="glass-panel overflow-hidden sticky top-8 flex flex-col max-h-[calc(100vh-120px)]">
-          <div class="p-5 border-b border-white/10 bg-[#1a1a2e]/80 backdrop-blur-md">
+          <div class="p-5 border-b border-mars-primary/20 bg-[#1a1a2e]/80 backdrop-blur-md">
             <h3 class="font-outfit font-bold text-xl text-white flex items-center gap-2">
               <svg class="w-5 h-5 text-[#ff7a45]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
               Orden Actual
@@ -234,7 +239,13 @@ function finalizarPedido() {
           </div>
           
           <div class="p-0 overflow-y-auto flex-1 scrollbar-hide">
-            <ul v-if="detalles.length > 0" class="divide-y divide-white/5">
+            <TransitionGroup 
+              tag="ul" 
+              v-if="detalles.length > 0" 
+              enter-active-class="animate__animated animate__fadeInUp animate__faster"
+              leave-active-class="animate__animated animate__fadeOutRight animate__faster"
+              class="divide-y divide-mars-primary/10 overflow-hidden"
+            >
               <li v-for="det in detalles" :key="det.id" class="p-5 hover:bg-white/5 transition-colors group relative overflow-hidden">
                 <div class="absolute inset-y-0 left-0 w-1 bg-[#ff7a45] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div class="flex justify-between mb-1">
@@ -248,7 +259,7 @@ function finalizarPedido() {
                   </button>
                 </div>
               </li>
-            </ul>
+            </TransitionGroup>
             <div v-else class="p-10 text-center flex flex-col items-center justify-center h-full opacity-50">
               <svg class="w-16 h-16 mb-4 text-[#a09fb9]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
               <p class="text-[#a09fb9] font-medium">El carrito está vacío</p>
@@ -257,6 +268,7 @@ function finalizarPedido() {
         </div>
       </div>
     </div>
+    </Transition>
   </div>
 </template>
 
