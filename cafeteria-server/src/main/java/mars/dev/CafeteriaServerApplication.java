@@ -29,7 +29,7 @@ public class CafeteriaServerApplication {
 			System.out.println("🌱 Usuarios semilla creados con éxito.");
 		}
 
-		System.out.println("✅ Servicios SOAP publicados:");
+		System.out.println("Servicios SOAP publicados:");
 		System.out.println("   http://localhost:8085/ws/categoria?wsdl");
 		System.out.println("   http://localhost:8085/ws/producto?wsdl");
 		System.out.println("   http://localhost:8085/ws/pedido?wsdl");

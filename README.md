@@ -4,6 +4,17 @@
 
 ---
 
+## 📚 Documentación del Sistema
+
+Para entender más a fondo la arquitectura, el diseño de la base de datos y cómo interactuar con los servicios SOAP, revisa la documentación detallada en la carpeta `docs/`:
+
+*   [🔌 Guía de Pruebas con SoapUI](file:///d:/Data-Analytic-Proyect/cafeteria-soap/docs/soapui-guide.md): Ejemplos de sobres XML y paso a paso para realizar consultas con SoapUI.
+*   [🌌 Arquitectura del Sistema](file:///d:/Data-Analytic-Proyect/cafeteria-soap/docs/arquitectura.md): Diagrama de flujo de datos, proxy de Nginx y redes de Docker.
+*   [📡 Servicios SOAP (JAX-WS)](file:///d:/Data-Analytic-Proyect/cafeteria-soap/docs/soap-services.md): Interfaces Java, publicación de endpoints y listado de métodos por servicio.
+*   [🔐 Roles, Permisos e Inicialización](file:///d:/Data-Analytic-Proyect/cafeteria-soap/docs/usuarios-roles.md): Matriz de permisos del frontend, guardia de rutas en Vue 3 y base de datos semilla.
+
+---
+
 ## 🚀 Arquitectura y Tecnologías
 
 El sistema está dividido en dos componentes principales y utiliza contenedores para facilitar su despliegue:
