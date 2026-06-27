@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS cafeteria_db;
+SET NAMES utf8mb4;
+CREATE DATABASE IF NOT EXISTS cafeteria_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE cafeteria_db;
 
 -- 1. Categorías
